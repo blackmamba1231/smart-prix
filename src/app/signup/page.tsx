@@ -20,22 +20,25 @@ export default function SignUpPage() {
             ...formData,
             [name]: value
         });
-        async function onSubmit(events: React.SyntheticEvent) {
-            try{
-                const response = await axios.post(process.env.NEST_PUBLIC_BACKEND_URL + '/users/signup', formData);
-            localStorage.setItem('email', response.data.email);
-            if(response.data.success){
-                router.push('/otp')
-            }else{
-                console.log(response.data.message);
-            }
-            } catch (error) {
-                console.error(error);
-            }finally{
-                setisLoading(false);
-            }
-        }
+        
     }
+    async function onSubmit(event: React.SyntheticEvent) {
+      event.preventDefault()
+      setisLoading(true);
+      try{
+          const response = await axios.post(process.env.NEST_PUBLIC_BACKEND_URL + '/users/signup', formData);
+      localStorage.setItem('email', response.data.email);
+      if(response.data.success){
+          router.push('/otp')
+      }else{
+          console.log(response.data.message);
+      }
+      } catch (error) {
+          console.error(error);
+      }finally{
+          setisLoading(false);
+      }
+  }
   return (
     <div className="container  mx-auto my-10 flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
       <div className="flex flex-col space-y-2 text-center">
@@ -45,7 +48,7 @@ export default function SignUpPage() {
         </p>
       </div>
       <div className="grid gap-6">
-        <form>
+        <form onSubmit={onSubmit}>
           <div className="grid gap-2">
             <div className="grid gap-1">
               <Label className="sr-only" htmlFor="email">

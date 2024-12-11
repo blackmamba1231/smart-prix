@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Twitter, LightbulbIcon  } from 'lucide-react'
+import { Facebook, Instagram, Twitter } from 'lucide-react'
 
 export const Icons = {
   facebook: Facebook,
