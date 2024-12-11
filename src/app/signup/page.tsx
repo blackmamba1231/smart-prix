@@ -13,7 +13,6 @@ export default function SignUpPage() {
         email: '',
         password: ''
     });
-    const [error, setError] = useState('');
     const router = useRouter();
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -28,7 +27,7 @@ export default function SignUpPage() {
             if(response.data.success){
                 router.push('/otp')
             }else{
-                setError(response.data.message);
+                console.log(response.data.message);
             }
             } catch (error) {
                 console.error(error);

@@ -52,7 +52,7 @@ export default function OTPVerification() {
         <Button type="submit" className="w-full">Verify</Button>
       </form>
       <p className="px-8 text-center text-sm text-muted-foreground">
-        Didn't receive the code?{" "}
+        Didnt receive the code?{" "}
         <Button variant="link" className="p-0 text-primary">Resend</Button>
       </p>
     </div>
