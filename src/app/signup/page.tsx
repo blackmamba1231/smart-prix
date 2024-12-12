@@ -43,7 +43,7 @@ export default function SignUpPage() {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        process.env.NEXT_PUBLIC_BACKEND_URL + "/users/login",
+        process.env.NEXT_PUBLIC_BACKEND_URL + "auth/signin",
         loginformData
       );
       localStorage.setItem("email", response.data.email);
@@ -63,8 +63,9 @@ export default function SignUpPage() {
     event.preventDefault();
     setIsLoading(true);
     try {
+      console.log(process.env.NEST_PUBLIC_BACKEND_URL + "auth/signup");
       const response = await axios.post(
-        process.env.NEXT_PUBLIC_BACKEND_URL + "/users/signup",
+        process.env.NEST_PUBLIC_BACKEND_URL + "auth/signup",
         formData
       );
       localStorage.setItem("email", response.data.email);
@@ -162,6 +163,22 @@ export default function SignUpPage() {
                       onChange={handleLoginChange}
                     />
                   </div>
+                  <div className="flex items-center justify-between space-x-2">
+      <div className="flex justify-between space-x-1">
+      <input
+        id="remember-me"
+        name="remember-me"
+        type="checkbox"
+        className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+      />
+      <label htmlFor="remember-me" className="text-sm text-gray-600">
+        Remember me
+      </label>
+      </div>
+      <a href="/forgot-password" className="hover:text-indigo-600  text-sm">
+        Forgot password?
+      </a>
+    </div>
                   <Button
                     type="submit"
                     className="w-full bg-indigo-500 text-white hover:bg-indigo-400 rounded-lg"
@@ -169,6 +186,13 @@ export default function SignUpPage() {
                   >
                     {isLoading ? "Logging in..." : "Login"}
                   </Button>
+
+    <div className="flex justify-between text-sm text-gray-600 mt-4">
+      
+      <a href="/signup" className="hover:text-indigo-600">
+        Dont have an account yet? Sign up
+      </a>
+    </div>
                 </form>
               </TabsContent>
               <TabsContent value="signup">
