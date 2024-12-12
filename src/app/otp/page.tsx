@@ -1,13 +1,13 @@
 'use client'
-
+import axios  from "axios"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-
+import { useRouter } from "next/navigation"
 
 export default function OTPVerification() {
   const [otp, setOtp] = useState(['', '', '', '', '', ''])
-
+  const router = useRouter()
   const handleChange = (element: React.ChangeEvent<HTMLInputElement>, index: number) => {
     if (isNaN(Number(element.target.value))) return false
 
@@ -17,12 +17,24 @@ export default function OTPVerification() {
       (element.target.nextSibling as HTMLInputElement).focus()
     }
   }
-
-  const handleSubmit = (e: React.FormEvent) => {
+  
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault()
     const otpValue = otp.join('')
     console.log('OTP submitted:', otpValue)
-    // Here you would typically send the OTP to your backend for verification
+    try{
+      const response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL +"/users/verify", {otp: otpValue,email: localStorage.getItem('email')})
+    console.log(response);
+    if(response.data.success){
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('AccountId', response.data.AccountId);
+      router.push("/home")
+    }else{
+      alert(response.data.message)
+    }
+    }catch(_error){
+     console.log(_error);
+    }
   }
 
   return (
