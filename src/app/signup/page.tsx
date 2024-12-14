@@ -10,6 +10,8 @@ import axios from "axios";
 import { FaGoogle } from "react-icons/fa";
 import { Facebook, Twitter, Instagram } from "lucide-react";
 import clsx from "clsx";
+require('dotenv').config();
+
 
 export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -21,7 +23,8 @@ export default function SignUpPage() {
       name: "",
       email: "",
       password: "",
-      phone: ''
+      phone: '',
+      referalcode: ""
   })
   const router = useRouter();
   const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,12 +46,15 @@ export default function SignUpPage() {
     setIsLoading(true);
     try {
       const response = await axios.post(
-        process.env.NEXT_PUBLIC_BACKEND_URL + "auth/signin",
+        process.env.NEST_PUBLIC_BACKEND_URL + "auth/signin",
         loginformData
       );
-      localStorage.setItem("email", response.data.email);
-      if (response.data.success) {
-        router.push("/otp");
+      console.log(response.data);
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("AccountId", response.data.AccountId);
+      localStorage.setItem("email", response.data.useremail);
+      if (response.data) {
+        router.push("/dashboard");
       } else {
         console.log(response.data.message);
       }
@@ -62,17 +68,20 @@ export default function SignUpPage() {
   async function onSubmit(event: React.SyntheticEvent) {
     event.preventDefault();
     setIsLoading(true);
+
     try {
+      
       console.log(process.env.NEST_PUBLIC_BACKEND_URL + "auth/signup");
       const response = await axios.post(
         process.env.NEST_PUBLIC_BACKEND_URL + "auth/signup",
         formData
       );
+      console.log(response);
       localStorage.setItem("email", response.data.email);
-      if (response.data.success) {
+      if (response.data) {
         router.push("/otp");
       } else {
-        console.log(response.data.message);
+        alert("user already exists");
       }
     } catch (error) {
       console.error(error);
@@ -226,6 +235,16 @@ export default function SignUpPage() {
                       type="tel"
                       pattern="[0-9]{10}"
                       required
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    
+                    <Input
+                      id="referalcode"
+                      name="referalcode"
+                      placeholder="ReferralCode (optional)"
+                      type="text"
                       onChange={handleChange}
                     />
                   </div>

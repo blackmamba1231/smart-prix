@@ -23,12 +23,13 @@ export default function OTPVerification() {
     const otpValue = otp.join('')
     console.log('OTP submitted:', otpValue)
     try{
-      const response = await axios.post(process.env.NEXT_PUBLIC_BACKEND_URL +"/users/verify", {otp: otpValue,email: localStorage.getItem('email')})
+      const response = await axios.post(process.env.NEST_PUBLIC_BACKEND_URL +"auth/verify-otp", {otp: otpValue,email: localStorage.getItem('email')})
     console.log(response);
     if(response.data.success){
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('AccountId', response.data.AccountId);
-      router.push("/home")
+      localStorage.setItem('useremail', response.data.email);
+      router.push("/dashboard")
     }else{
       alert(response.data.message)
     }
@@ -38,8 +39,8 @@ export default function OTPVerification() {
   }
 
   return (
-    <div className="container mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-      <div className="flex flex-col space-y-2 text-center">
+    <div className="mx-auto my-28 flex w-full flex-col items-center justify-center space-y-6 sm:w-[350px] py-8 px-8 bg-gradient-to-br from-indigo-500 to-purple-600 shadow rounded-md">
+      <div className="flex flex-col space-y-2 text-center ">
         <h1 className="text-2xl font-semibold tracking-tight">Verify your account</h1>
         <p className="text-sm text-muted-foreground">
           Enter the 6-digit code sent to your email
@@ -61,9 +62,9 @@ export default function OTPVerification() {
             />
           ))}
         </div>
-        <Button type="submit" className="w-full">Verify</Button>
+        <Button type="submit" className="w-full bg-sky-800 text-white">Verify</Button>
       </form>
-      <p className="px-8 text-center text-sm text-muted-foreground">
+      <p className="px-8 text-center text-sm text-muted-foreground text-indigo-800">
         Didnt receive the code?{" "}
         <Button variant="link" className="p-0 text-primary">Resend</Button>
       </p>
