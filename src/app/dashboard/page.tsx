@@ -46,10 +46,7 @@ const Dashboard = () => {
         console.log("fetching payments data");
         const response = await axios.get(process.env.NEST_PUBLIC_BACKEND_URL +"auth/payment", { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
         console.log(response.data);
-        setPayments({
-          ...payments,
-          ...response.data
-        });
+        setPayments(response.data);
 
       }catch(error){
         console.log(error);

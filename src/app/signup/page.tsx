@@ -10,7 +10,6 @@ import axios from "axios";
 import { FaGoogle } from "react-icons/fa";
 import { Facebook, Twitter, Instagram } from "lucide-react";
 import clsx from "clsx";
-require('dotenv').config();
 
 
 export default function SignUpPage() {
