@@ -64,7 +64,6 @@ const allCustomers: Customer[] = [
   // Add more customers as needed
 ];
 
-type SortKey = keyof Customer;
 
 export default function Customer() {
   const [searchQuery, setSearchQuery] = useState("");
