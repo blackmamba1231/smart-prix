@@ -12,7 +12,7 @@
 .env
 # testing
 /coverage
-
+next.config.ts
 # next.js
 /.next/
 /out/

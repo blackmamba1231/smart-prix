@@ -67,8 +67,7 @@ const Dashboard = () => {
   ];
   
 
-    const totalCashback = "₹0.0";
-    const friendsReferred = 0;
+   
     const [activeTab, setActiveTab] = useState<'personalDetails' | 'changePassword'>('personalDetails');
     const router = useRouter();
   const [newName, setNewName] = useState("");
@@ -83,12 +82,20 @@ const Dashboard = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [referralcode, setReferralcode] = useState("");
   const [newList, setNewList] = useState("");
+  const [friendsReferred, setFriendsReferred] = useState(0);
 const [lists, setLists] = useState(["Cars", "Tech Gadgets", ]);
 const [activities, setActivities] =  useState<string[]>([]);
 const logActivity = (activityDescription: string) => {
   const newActivity = activityDescription;
   setActivities((prevActivities) => [newActivity, ...prevActivities]);
 };
+useEffect(() => {
+  const referalnetwork= async()=> {
+    const response = await axios.get(process.env.NEST_PUBLIC_BACKEND_URL +"auth/referalnetwork", { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
+    console.log(response);
+  }
+  referalnetwork();
+},[])
 const handleAddList = () => {
   if (newList.trim()) {
     setLists([...lists, newList]);
@@ -720,7 +727,7 @@ useEffect(() => {
                 <div className="flex justify-between items-center">
                   <h1 className="text-xl font-bold text-gray-700">
                     Total Referral Cashback Earned:
-                    <span className="text-orange-600 ml-2">{totalCashback}</span>
+                    <span className="text-orange-600 ml-2">{cashback}</span>
                   </h1>
                   <h2 className="text-lg font-medium text-gray-600">
                     Friends Referred:
@@ -781,7 +788,7 @@ useEffect(() => {
                 <div className="flex justify-between items-center">
                   <h1 className="text-xl font-bold text-gray-700">
                     Total Referral Cashback Earned:
-                    <span className="text-orange-600 ml-2">{totalCashback}</span>
+                    <span className="text-orange-600 ml-2">{cashback}</span>
                   </h1>
                   <h2 className="text-lg font-medium text-gray-600">
                     Friends Referred:
