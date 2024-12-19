@@ -16,8 +16,14 @@ import {
 
 interface DatePickerWithRangeProps {
   className?: string
-  date: DateRange | undefined
-  setDate: (date: DateRange | any) => void
+  date: {
+    from: Date;
+    to: Date;
+  }
+  setDate: (date: {
+    from: Date;
+    to: Date;
+  }) => void
 }
 
 export function DatePickerWithRange({
@@ -25,6 +31,12 @@ export function DatePickerWithRange({
   date,
   setDate,
 }: DatePickerWithRangeProps) {
+  const handleDateSelect = (selected: DateRange | undefined) => {
+    if (selected?.from && selected?.to) {
+      setDate({ from: selected.from, to: selected.to });
+    }
+  };
+
   return (
     <div className={cn("grid gap-2", className)}>
       <Popover>
@@ -58,7 +70,7 @@ export function DatePickerWithRange({
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            onSelect={handleDateSelect}
             numberOfMonths={2}
             classNames={{
               weekday: "text-center font-medium text-sm text-gray-500",
@@ -68,5 +80,6 @@ export function DatePickerWithRange({
         </PopoverContent>
       </Popover>
     </div>
-  )
+  );
 }
+

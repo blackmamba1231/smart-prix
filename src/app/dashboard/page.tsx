@@ -82,7 +82,7 @@ const Dashboard = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [referralcode, setReferralcode] = useState("");
   const [newList, setNewList] = useState("");
-  const [friendsReferred, setFriendsReferred] = useState(0);
+  const friendsReferred =0;
 const [lists, setLists] = useState(["Cars", "Tech Gadgets", ]);
 const [activities, setActivities] =  useState<string[]>([]);
 const logActivity = (activityDescription: string) => {

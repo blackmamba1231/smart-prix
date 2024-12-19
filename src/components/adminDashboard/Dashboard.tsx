@@ -53,7 +53,7 @@ export default function DashboardPage() {
   const [date, setDate] = useState<{
     from: Date;
     to: Date;
-  }>({
+  }  >({
     from: subDays(new Date(), 7),
     to: new Date()
   });

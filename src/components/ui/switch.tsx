@@ -4,9 +4,8 @@
 import React from "react"
 import { cn } from "@/lib/utils"
 
-interface SwitchProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-export function Switch({ className, ...props }: SwitchProps) {
+export function Switch({ className, ...props }: React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label className={cn("relative inline-flex items-center", className)}>
       <input
