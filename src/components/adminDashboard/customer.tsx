@@ -94,14 +94,7 @@ export default function Customer() {
     setSearchQuery(e.target.value);
   };
 
-  const handleSort = (key: SortKey) => {
-    if (key === sortKey) {
-      setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-    } else {
-      setSortKey(key);
-      setSortOrder("asc");
-    }
-  };
+  
 
   const handleViewDetails = (customer: Customer) => {
     setSelectedCustomer(customer);
