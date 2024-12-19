@@ -29,7 +29,7 @@ export default function OTPVerification() {
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('AccountId', response.data.AccountId);
       localStorage.setItem('useremail', response.data.email);
-      router.push("/dashboard")
+      router.push("/admin")
     }else{
       alert(response.data.message)
     }
