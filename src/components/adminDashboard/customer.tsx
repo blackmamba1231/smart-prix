@@ -69,8 +69,8 @@ type SortKey = keyof Customer;
 export default function Customer() {
   const [searchQuery, setSearchQuery] = useState("");
   const [customers, setCustomers] = useState(allCustomers);
-  const [sortKey, setSortKey] = useState<SortKey>("lastOrder");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const sortKey = "lastOrder";
+  const sortOrder= "asc" 
 
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
 
