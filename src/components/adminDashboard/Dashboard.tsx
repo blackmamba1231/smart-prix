@@ -32,7 +32,7 @@ import { jsPDF } from "jspdf";
 
 // Define types for the fetched data
 interface UserAnalyticsData {
-  date: any;
+  date: string;
   clicks: number;
   views: number;
   signups: number;
