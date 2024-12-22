@@ -89,6 +89,29 @@ const logActivity = (activityDescription: string) => {
   const newActivity = activityDescription;
   setActivities((prevActivities) => [newActivity, ...prevActivities]);
 };
+const states = [
+  "Andhra Pradesh",
+  "Bihar",
+  "Delhi",
+  "Karnataka",
+  "Maharashtra",
+  "Tamil Nadu",
+  "Uttar Pradesh",
+  // Add more states here
+];
+
+const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+
+const genders = ["Male", "Female", "Other"];
+const [state, setState] = useState("");
+const [bloodGroup, setBloodGroup] = useState("");
+const [dob, setDob] = useState("");
+const [gender, setGender] = useState("");
+const [fullName, setFullName] = useState('RAHUL AGRAWAL');
+  const [email, setEmail] = useState('mixoxxxxxxxx@gmail.com');
+  const [mobile, setMobile] = useState('+91 93XXXXXX67');
+  const [receiveEmails, setReceiveEmails] = useState(true);
+
 useEffect(() => {
   const referalnetwork= async()=> {
     const response = await axios.get(process.env.NEST_PUBLIC_BACKEND_URL +"auth/referalnetwork", { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } });
@@ -200,6 +223,25 @@ useEffect(() => {
       setNewTicket("");
       setIsSubmitting(false);
     }, 1000);
+  };
+  const handleSaveChanges = () => {
+    // Handle save logic
+    console.log({
+      fullName,
+      email,
+      mobile,
+      state,
+      bloodGroup,
+      dob,
+      gender,
+      receiveEmails,
+    });
+    alert('Changes saved successfully!');
+  };
+
+  const handleDeleteAccount = () => {
+    // Handle delete logic
+    alert('Account deletion request submitted.');
   };
   const renderContent = () => {
     switch (activePage) {
@@ -902,152 +944,118 @@ useEffect(() => {
   );
       case "settings":
         return (
-            <div className="min-h-screen bg-gray-50 p-6">
-              <div className="max-w-4xl mx-auto bg-white shadow-md rounded-lg">
-                {/* Tabs */}
-                <div className="flex border-b">
-                  <button
-                    onClick={() => setActiveTab('personalDetails')}
-                    className={`flex-1 py-4 text-center font-medium ${
-                      activeTab === 'personalDetails' ? 'border-orange-500 text-orange-500' : 'text-gray-600'
-                    } border-b-2`}
-                  >
-                    Personal Details
-                  </button>
-                  <button
-                    onClick={() => setActiveTab('changePassword')}
-                    className={`flex-1 py-4 text-center font-medium ${
-                      activeTab === 'changePassword' ? 'border-orange-500 text-orange-500' : 'text-gray-600'
-                    } border-b-2`}
-                  >
-                    Change Password
-                  </button>
-                  
-                </div>
-        
-                {/* Tab Content */}
-                <div className="p-6">
-                  {activeTab === 'personalDetails' && (
-                    <div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-1">Full Name:</label>
-                          <input
-                            type="text"
-                            value="RAHUL AGRAWAL"
-                            className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
-                          />
-                          </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Email Address:</label>
-                  <input
-                    type="email"
-                    value="mixoxxxxxxxx@gmail.com"
-                    className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number:</label>
-                  <input
-                    type="text"
-                    value="+91 93XXXXXX67"
-                    className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
-                  <input
-                    type="text"
-                    value=""
-                    className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
-                  <input
-                    type="text"
-                    value=""
-                    className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Blood-Group</label>
-                  <input
-                    type="text"
-                    value=""
-                    className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Date-Of-Birth</label>
-                  <input
-                    type="text"
-                    value=""
-                    className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Gender</label>
-                  <input
-                    type="text"
-                    value=""
-                    className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
-                  />
-                </div>
-                <div className="flex items-center space-x-2 mt-4">
-                  <input type="checkbox" className="form-checkbox text-orange-500" defaultChecked />
-                  <label className="text-sm text-gray-600">Receive email when I get referral earnings</label>
-                </div>
+          <div className="p-6">
+          <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name:</label>
+                <input
+                  type="text"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
+                />
               </div>
-              <button className="mt-6 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:ring focus:ring-red-300">
-                Delete my account
-              </button>
-              <div className="mt-6 text-right">
-                <button className="bg-orange-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                  Save Changes
-                </button>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email Address:</label>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Mobile Number:</label>
+                <input
+                  type="text"
+                  value={mobile}
+                  onChange={(e) => setMobile(e.target.value)}
+                  className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
+                <select
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
+                  className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
+                >
+                  <option value="">Select a State</option>
+                  {states.map((state, index) => (
+                    <option key={index} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Blood Group</label>
+                <select
+                  value={bloodGroup}
+                  onChange={(e) => setBloodGroup(e.target.value)}
+                  className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
+                >
+                  <option value="">Select a Blood Group</option>
+                  {bloodGroups.map((group, index) => (
+                    <option key={index} value={group}>
+                      {group}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Date of Birth</label>
+                <input
+                  type="date"
+                  value={dob}
+                  onChange={(e) => setDob(e.target.value)}
+                  className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                <select
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                  className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
+                >
+                  <option value="">Select Gender</option>
+                  {genders.map((gender, index) => (
+                    <option key={index} value={gender}>
+                      {gender}
+                    </option>
+                  ))}
+                </select>
               </div>
             </div>
-          )}
-{activeTab === 'changePassword' && (
-            <div>
-              <div className="grid grid-cols-1 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Current Password:</label>
-                  <input
-                    type="password"
-                    placeholder="Current Password"
-                    className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">New Password:</label>
-                  <input
-                    type="password"
-                    placeholder="New Password"
-                    className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Confirm New Password:</label>
-                  <input
-                    type="password"
-                    placeholder="Confirm Password"
-                    className="w-full border rounded-lg p-2 focus:outline-none focus:ring focus:ring-orange-300"
-                  />
-                </div>
-              </div>
-              <div className="mt-6 text-right">
-                <button className="bg-orange-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400">
-                  Save Changes
-                </button>
-              </div>
+    
+            <div className="flex items-center space-x-2 mt-4">
+              <input
+                type="checkbox"
+                className="form-checkbox text-orange-500"
+                checked={receiveEmails}
+                onChange={(e) => setReceiveEmails(e.target.checked)}
+              />
+              <label className="text-sm text-gray-600">Receive email when I get referral earnings</label>
             </div>
-          )}
+          </div>
+          <button
+            onClick={handleDeleteAccount}
+            className="mt-6 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:ring focus:ring-red-300"
+          >
+            Delete my account
+          </button>
+          <div className="mt-6 text-right">
+            <button
+              onClick={handleSaveChanges}
+              className="bg-orange-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-400"
+            >
+              Save Changes
+            </button>
+          </div>
         </div>
-      </div>
-    </div>
-  );
+      );
       case "logout":
        return(
         <div>
