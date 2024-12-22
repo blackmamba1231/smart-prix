@@ -263,6 +263,99 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
             )}
           </div>
         </div>
+        <div className="space-y-2">
+                      <Label htmlFor="priority" className="text-sm font-medium text-gray-700">
+                        Priority
+                      </Label>
+                      <Input
+                        id="priority"
+                        type="number"
+                        value={formData.priority}
+                        onChange={(e) => handleInputChange('priority', e.target.value)}
+                        placeholder="Select the Priority for your Store, i.e. 1,2,3,4"
+                        className="rounded-md border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="CashbackRate" className="text-sm font-medium text-gray-700">
+                        Cashback Rate
+                      </Label>
+                      <Input
+                        id="CashbackRate"
+                        type="number"
+                        value={formData.CashbackRate}
+                        onChange={(e) => handleInputChange('CashbackRate', e.target.value)}
+                        placeholder="Set the Cashback Rate"
+                        className="rounded-md border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="StoreContactPersonName" className="text-sm font-medium text-gray-700">
+                      Contact Person Name
+                      </Label>
+                      <Input
+                        id="StoreContactPersonName"
+                        type="string"
+                        value={formData.StoreContactPersonName}
+                        onChange={(e) => handleInputChange('StoreContactPersonName', e.target.value)}
+                        placeholder="Store Contact Person Name "
+                        className="rounded-md border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="StorePersonEmail" className="text-sm font-medium text-gray-700">
+                      Contact Person Email
+                      </Label>
+                      <Input
+                        id="StorePersonEmail"
+                        type="string"
+                        value={formData.StorePersonEmail}
+                        onChange={(e) => handleInputChange('StorePersonEmail', e.target.value)}
+                        placeholder="Store Contact Person Name "
+                        className="rounded-md border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="StorePersonPhone" className="text-sm font-medium text-gray-700">
+                      Contact Person Phone
+                      </Label>
+                      <Input
+                        id="StorePersonPhone"
+                        type="tel"
+                        maxLength={10}
+                        value={formData.StorePersonPhone}
+                        onChange={(e) => handleInputChange('StorePersonPhone', e.target.value)}
+                        placeholder="Store Contact Person Phone "
+                        className="rounded-md border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="SEOTitle" className="text-sm font-medium text-gray-700">
+                       SEO Title
+                      </Label>
+                      <Input
+                        id="SEOTitle"
+                        type="string"
+                        value={formData.SEOTitle}
+                        onChange={(e) => handleInputChange('SEOTitle', e.target.value)}
+                        placeholder="SEO title for the Store "
+                        className="rounded-md border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                    <Label htmlFor="MetaDescription" className="text-sm font-medium text-gray-700">
+                      Meta Description
+                    </Label>
+                    <Textarea
+                    id="MetaDescription"
+                    value={
+                      formData.MetaDescription
+                    }
+                    onChange={(e) => handleInputChange('MetaDescription', e.target.value)}
+                    placeholder="Enter Meta description"
+                    className="rounded-md border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+                    ></Textarea>
+                  </div>
                 </TabsContent>
 
                 <TabsContent value="affiliate" className="space-y-6">
@@ -318,6 +411,25 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
                         value={formData.ApiKey}
                         onChange={(e) => handleInputChange('apiKey', e.target.value)}
                         placeholder="Enter API key"
+                        className="pl-10 rounded-md border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    
+                    <Label htmlFor="AffiliateUrl" className="text-sm font-medium text-gray-700">
+                      Affiliate URL
+                    </Label>
+                    <div className="relative">
+                    <Globe
+                          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                          size={18}
+                        />
+                      <Input
+                        id="AffiliateUrl"
+                        value={formData.AffiliateUrl}
+                        onChange={(e) => handleInputChange('AffiliateUrl', e.target.value)}
+                        placeholder="Enter Affiliate URL"
                         className="pl-10 rounded-md border-gray-300 focus:border-purple-500 focus:ring-purple-500"
                       />
                     </div>
