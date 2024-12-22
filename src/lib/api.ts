@@ -1,24 +1,27 @@
 import axios from "axios";
 import { storeData } from "@/types/store";
+import { toast } from "react-toastify";
 // Fetch user analytics
 
 export async function createStore(storeData: Partial<storeData>) {
   try {
-    const response = await fetch(`${process.env.NEST_PUBLIC_BACKEND_URL}stores`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(storeData),
-    });
+    console.log("creating store with data:"+ storeData)
+    const { data } = await axios.post(process.env.NEST_PUBLIC_BACKEND_URL + `stores/create`,storeData,{
+       headers: {'Content-Type': 'application/json'
+       },
+   }
+    );
+    console.log("Successfully created a store -> "+ data)
     
-    if (!response.ok) {
+    if (!data) {
+      toast.error('Failed to create store');
       throw new Error('Failed to create store');
     }
     
-    return await response.json();
+    return await data;
   } catch (error) {
-    console.error('Error creating store:', error);
+    toast.error('Failed to create store');
+    console.error ('Error creating store:', error);
     throw error;
   }
 }
@@ -42,6 +45,7 @@ export async function fetchUserAnalytics(datefrom: string, dateto: string) {
     console.log("User Analytics:", userAnalyticsData);
     return userAnalyticsData;
   } else {
+    toast.error('Failed to fetch user analytics');
     console.error("Expected data to be an array, but received:", data);
     return [];
   }

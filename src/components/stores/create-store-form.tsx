@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Separator } from "../ui/separator";
 import axios from 'axios';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
+import { toast } from "react-toastify";
     interface CreateStoreFormProps {
     onSuccess: () => void;
     }
@@ -36,7 +37,9 @@ import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headless
         try {
         await createStore(formData);
         onSuccess();
+        toast.success('Store created successfully');
         } catch (error) {
+            toast.error('Failed to create store');
         console.error('Failed to create store:', error);
         } finally {
         setLoading(false);
@@ -47,9 +50,9 @@ import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headless
 const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const maxFileSizeMB = 2;
+      const maxFileSizeMB = 10;
       if (file.size > maxFileSizeMB * 1024 * 1024) {
-        alert('File size exceeds 2MB. Please select a smaller file.');
+        alert('File size exceeds 10MB. Please select a smaller file.');
         return;
       }
       if (!file.type.startsWith('image/')) {
@@ -61,7 +64,7 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
       formData.append('file', file);
   
       try {
-        const { data } = await axios.post(process.env.NEST_PUBLIC_BACKEND_URL + '/upload/image', formData, {
+        const { data } = await axios.post(process.env.NEST_PUBLIC_BACKEND_URL + '/upload', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         setFormData((prevData) => ({ ...prevData, logo: data.url }));

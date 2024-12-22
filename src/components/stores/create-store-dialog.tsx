@@ -19,7 +19,7 @@ export function CreateStoreDialog() {
           Create Store
         </Button>
       </DialogTrigger>
-      <DialogContent className="p-0 max-w-3xl max-h-[90vh] overflow-y-auto ">
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto ">
         <VisuallyHidden>
           <DialogTitle>Create a New Store</DialogTitle>
         </VisuallyHidden>
