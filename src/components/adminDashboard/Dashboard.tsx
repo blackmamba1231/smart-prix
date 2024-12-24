@@ -5,6 +5,8 @@ import {
   MessageSquareIcon,
   BellIcon,
 } from "lucide-react";
+
+import 'react-toastify/dist/ReactToastify.css';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -29,6 +31,7 @@ import { DatePickerWithRange } from "@/components/ui/date-picker";
 import { subDays } from "date-fns";
 import { fetchUserAnalytics, fetchEarnings, fetchReferrals, updateUserEarnings } from "@/lib/api";
 import { jsPDF } from "jspdf";
+import { toast, ToastContainer } from "react-toastify";
 
 // Define types for the fetched data
 interface UserAnalyticsData {
@@ -66,6 +69,7 @@ export default function DashboardPage() {
      try {
         await updateUserEarnings();
      } catch (error) {
+      toast.error('Failed to update earnings');
        console.log("unable to update earnings data:" + error);
      }
     }
@@ -93,6 +97,7 @@ export default function DashboardPage() {
         const referalData = await fetchReferrals();
         setReferrals(referalData);
       } catch (error) {
+        toast.error('Failed to fetch data');
         console.error("Failed to fetch data:", error);
       }
     }
@@ -116,6 +121,16 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+       <ToastContainer   position="bottom-right"
+  autoClose={5000}
+  hideProgressBar={false}
+  newestOnTop={false}
+  closeOnClick
+  rtl={false}
+  pauseOnFocusLoss
+  draggable
+  pauseOnHover
+/>
       {/* Header */}
       <header className="sticky top-0 z-10 bg-white dark:bg-gray-800 shadow-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -144,18 +159,7 @@ export default function DashboardPage() {
             Overview
           </h2>
           <div className="flex items-center gap-4">
-            <Select defaultValue="today">
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select period" />
-              </SelectTrigger>
-              <SelectContent className="bg-white">
-                <SelectItem value="today">Today</SelectItem>
-                <SelectItem value="7days">Last 7 days</SelectItem>
-                <SelectItem value="month">This month</SelectItem>
-                <SelectItem value="year">This year</SelectItem>
-                <SelectItem value="custom">Custom range</SelectItem>
-              </SelectContent>
-            </Select>
+           
             <DatePickerWithRange
               className="bg-white"
               date={date}

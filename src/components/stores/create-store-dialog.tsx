@@ -1,9 +1,6 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { PlusCircle } from "lucide-react";
 import { CreateStoreForm } from "./create-store-form";
 
@@ -19,11 +16,11 @@ export function CreateStoreDialog() {
           Create Store
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto ">
+      <DialogContent className=" max-h-[90vh] overflow-y-auto ">
         <VisuallyHidden>
           <DialogTitle>Create a New Store</DialogTitle>
         </VisuallyHidden>
-        <CreateStoreForm  onSuccess={() => setOpen(false)} />
+        <CreateStoreForm onSuccess={() => setOpen(false)} />
       </DialogContent>
     </Dialog>
   );

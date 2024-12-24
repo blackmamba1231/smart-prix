@@ -12,7 +12,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { Separator } from "../ui/separator";
 import axios from 'axios';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+import { error } from "console";
+import 'react-toastify/dist/ReactToastify.css';
+
     interface CreateStoreFormProps {
     onSuccess: () => void;
     }
@@ -39,7 +42,7 @@ import { toast } from "react-toastify";
         onSuccess();
         toast.success('Store created successfully');
         } catch (error) {
-            toast.error('Failed to create store');
+        toast.error('Fill all the fields');
         console.error('Failed to create store:', error);
         } finally {
         setLoading(false);
@@ -62,15 +65,53 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
   
       const formData = new FormData();
       formData.append('file', file);
-  
+      console.log(formData);
       try {
-        const { data } = await axios.post(process.env.NEST_PUBLIC_BACKEND_URL + '/upload', formData, {
+        const { data } = await axios.post(process.env.NEST_PUBLIC_BACKEND_URL + 'upload', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
+        if(data.url === undefined){
+          console.log("not success");
+          return;
+        }
+        console.log('Image uploaded successfully:', data);
         setFormData((prevData) => ({ ...prevData, logo: data.url }));
       } catch (error) {
         console.error('Image upload failed:', error);
-        alert('Failed to upload image. Please try again.');
+        toast.error('Image upload failed');
+      }
+    }
+  };
+const bannerhandleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const maxFileSizeMB = 10;
+      if (file.size > maxFileSizeMB * 1024 * 1024) {
+        alert('File size exceeds 10MB. Please select a smaller file.');
+        return;
+      }
+      if (!file.type.startsWith('image/')) {
+        alert('Please select a valid image file.');
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.append('file', file);
+      console.log(formData);
+      try {
+        const { data } = await axios.post(process.env.NEST_PUBLIC_BACKEND_URL + 'upload', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        });
+        if(data.url === undefined){
+          console.log("not success");
+          return;
+        }
+        toast.success('Image uploaded successfully');
+        console.log('Image uploaded successfully:', data);
+        setFormData((prevData) => ({ ...prevData, storeBannerImage: data.url }));
+      } catch (error) {
+        console.error('Image upload failed:', error);
+        toast.error('Image upload failed');
       }
     }
   };
@@ -98,15 +139,28 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
           });
       } 
     return (
+      
         <div className="
-       w-full min-h-screen bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 p-8">
+       w-full min-h-screen max-w-5xl bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 p-8">
+       
       <div className="max-w-full mx-auto py-3 space-y-3">
         <div className="flex items-center justify-center">
         <h3 className="text-4xl font-extrabold mb-8 text-center bg-clip-text "> Create Store </h3>
 
         </div>
+        
         <Card className="backdrop-blur-sm bg-white/70 shadow-xl border-0 py-4">
           <CardContent className="p-8">
+          <ToastContainer   position="bottom-right"
+  autoClose={5000}
+  hideProgressBar={false}
+  newestOnTop={false}
+  closeOnClick
+  rtl={false}
+  pauseOnFocusLoss
+  draggable
+  pauseOnHover
+/>
             <Tabs defaultValue="basic" className="space-y-8">
               <TabsList className="grid w-full grid-cols-2 mb-8 bg-purple-100 p-1 rounded-lg">
                 <TabsTrigger
@@ -150,7 +204,7 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
                         <Input
                           id="url"
                           value={formData.url}
-                          onChange={(e) => handleInputChange('storeURL', e.target.value)}
+                          onChange={(e) => handleInputChange('url', e.target.value)}
                           placeholder="https://example.com"
                           type="url"
                           className="pl-10 rounded-md border-gray-300 focus:border-purple-500 focus:ring-purple-500"
@@ -181,33 +235,33 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
                         accept="image/*"
                       />
                       <span className="text-sm text-gray-500">
-                        {formData.logo ? formData.logo : 'No file chosen'}
+                        <img src= {formData.logo} alt="No files chosen" />
                       </span>
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="logo" className="text-sm font-medium text-gray-700">
+                    <Label htmlFor="storeBannerImage" className="text-sm font-medium text-gray-700">
                       Store Banner Upload
                     </Label>
                     <div className="flex items-center space-x-4">
                       <Button
                         type="button"
                         variant="outline"
-                        onClick={() => document.getElementById('')?.click()}
+                        onClick={() => document.getElementById('storeBannerImage')?.click()}
                         className="bg-purple-50 text-purple-700 hover:bg-purple-100"
                       >
                         <Upload className="mr-2" size={18} />
                         Choose File
                       </Button>
                       <Input
-                        id="logo"
+                        id="storeBannerImage"
                         type="file"
-                        onChange={handleFileUpload}
+                        onChange={bannerhandleFileUpload}
                         className="hidden"
                         accept="image/*"
                       />
                       <span className="text-sm text-gray-500">
-                        {formData.logo ? formData.logo : 'No file chosen'}
+                        <img src= {formData.storeBannerImage} alt="No files chosen" />
                       </span>
                     </div>
                   </div>
@@ -314,7 +368,7 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
                         type="string"
                         value={formData.StorePersonEmail}
                         onChange={(e) => handleInputChange('StorePersonEmail', e.target.value)}
-                        placeholder="Store Contact Person Name "
+                        placeholder="Store Contact Person Email"
                         className="rounded-md border-gray-300 focus:border-purple-500 focus:ring-purple-500"
                       />
                     </div>
@@ -368,16 +422,16 @@ const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
                         Affiliate Network
                       </Label>
                       <Select
-                        onValueChange={(value) => handleInputChange('affiliateNetwork', value)}
+                        onValueChange={(value) => handleInputChange('AffiliateNetwork', value)}
                         defaultValue={formData.AffiliateNetwork}
                       >
                         <SelectTrigger className="rounded-md border-gray-300 focus:border-purple-500 focus:ring-purple-500">
                           <SelectValue placeholder="Select network" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="Admitad">Admitad</SelectItem>
-                          <SelectItem value="Cuelinks">Cuelinks</SelectItem>
-                          <SelectItem value="Rakuten">Rakuten</SelectItem>
+                          <SelectItem className="bg-white hover:cursor-pointer hover:bg-gray-400" value="Admitad">Admitad</SelectItem>
+                          <SelectItem className="bg-white hover:cursor-pointer hover:bg-gray-400" value="Cuelinks">Cuelinks</SelectItem>
+                          <SelectItem className="bg-white hover:cursor-pointer hover:bg-gray-400" value="Rakuten">Rakuten</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

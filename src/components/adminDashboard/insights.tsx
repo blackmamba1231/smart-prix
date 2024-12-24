@@ -42,6 +42,7 @@ export default function StoreInsights() {
     async function getStoreData() {
       try {
         const response = await fetchStoreData();
+        console.log(response);
         setStoresData(response);
         const newAlerts = response
           .filter((store: store) => store.conversionRate < 2 || store.clicks < 100)

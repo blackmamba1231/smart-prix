@@ -63,7 +63,7 @@ export async function fetchEarnings() {
 }
 
 export async function fetchStoreData(){
-  const {data} = await axios.get(`${process.env.NEST_PUBLIC_BACKEND_URL}stores/getAllStores`);
+  const {data} = await axios.get(`${process.env.NEST_PUBLIC_BACKEND_URL}stores`);
   return data;
 }
 // Fetch referrals

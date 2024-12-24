@@ -59,10 +59,11 @@ function Calendar({
               onClick={onPreviousClick}
               className={cn(
                 buttonVariants({ variant: "outline" }),
-                "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+                "h-7 w-7 bg-white text-black p-0  hover:opacity-100"
               )}
             >
-              <ChevronLeft className="h-4 w-4" />
+            
+              <ChevronLeft className="h-3 w-3 fill-black" />
             </button>
             <button
               type="button"
