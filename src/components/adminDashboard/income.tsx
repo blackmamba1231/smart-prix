@@ -62,12 +62,12 @@ export default function Income() {
       {/* Filters */}
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-          <DatePickerWithRange className="bg-white" date={date} setDate={setDate} />
+          <DatePickerWithRange className="bg-white dark:bg-gray-800" date={date} setDate={setDate} />
           <Select defaultValue="all" onValueChange={(value) => setActionFilter(value)}>
             <SelectTrigger className="w-[200px]">
               <SelectValue placeholder="Filter by action" />
             </SelectTrigger>
-            <SelectContent className="bg-white">
+            <SelectContent className="bg-white dark:bg-gray-800">
               <SelectItem className="hover:cursor-pointer hover:bg-gray-300" value="all">All Actions</SelectItem>
               <SelectItem className="hover:cursor-pointer hover:bg-gray-300" value="edit">Edit</SelectItem>
               <SelectItem className="hover:cursor-pointer hover:bg-gray-300" value="approve">Approve</SelectItem>

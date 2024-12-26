@@ -140,43 +140,23 @@ const bannerhandleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) =>
       } 
     return (
       
-        <div className="
-       w-full min-h-screen max-w-5xl bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 p-8">
-       
+      <div className="w-full min-h-screen max-w-5xl bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 p-8">
       <div className="max-w-full mx-auto py-3 space-y-3">
-        <div className="flex items-center justify-center">
-        <h3 className="text-4xl font-extrabold mb-8 text-center bg-clip-text "> Create Store </h3>
-
-        </div>
-        
-        <Card className="backdrop-blur-sm bg-white/70 shadow-xl border-0 py-4">
+        <h3 className="text-4xl font-extrabold mb-8 text-center bg-clip-text text-gray-900 dark:text-white">
+          Create Store
+        </h3>
+        <Card className="backdrop-blur-sm bg-white/70 dark:bg-gray-800 shadow-xl border-0 py-4">
           <CardContent className="p-8">
-          <ToastContainer   position="bottom-right"
-  autoClose={5000}
-  hideProgressBar={false}
-  newestOnTop={false}
-  closeOnClick
-  rtl={false}
-  pauseOnFocusLoss
-  draggable
-  pauseOnHover
-/>
+            <ToastContainer position="bottom-right" autoClose={5000} pauseOnHover />
             <Tabs defaultValue="basic" className="space-y-8">
-              <TabsList className="grid w-full grid-cols-2 mb-8 bg-purple-100 p-1 rounded-lg">
-                <TabsTrigger
-                  value="basic"
-                  className="rounded-md data-[state=active]:bg-white data-[state=active]:text-purple-700"
-                >
+              <TabsList className="grid w-full grid-cols-2 mb-8 bg-purple-100 dark:bg-gray-700 p-1 rounded-lg">
+                <TabsTrigger value="basic" className="rounded-md data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">
                   Basic Information
                 </TabsTrigger>
-                <TabsTrigger
-                  value="affiliate"
-                  className="rounded-md data-[state=active]:bg-white data-[state=active]:text-purple-700"
-                >
+                <TabsTrigger value="affiliate" className="rounded-md data-[state=active]:bg-white dark:data-[state=active]:bg-gray-900">
                   Affiliate Details
                 </TabsTrigger>
               </TabsList>
-
               <form onSubmit={handleSubmit} className="space-y-8">
                 <TabsContent value="basic" className="space-y-5">
                   <div className="grid grid-cols-2 gap-6">
@@ -413,6 +393,7 @@ const bannerhandleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) =>
                     className="rounded-md border-gray-300 focus:border-purple-500 focus:ring-purple-500"
                     ></Textarea>
                   </div>
+                  
                 </TabsContent>
 
                 <TabsContent value="affiliate" className="space-y-6">
@@ -512,14 +493,9 @@ const bannerhandleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) =>
                   </div>
                 </TabsContent>
 
-                <Separator className="my-8" />
-
+                <Separator className="my-8 dark:bg-gray-600" />
                 <div className="flex justify-end">
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700 transition-all duration-300 ease-in-out transform hover:scale-105"
-                  >
+                  <Button type="submit" className="bg-purple-600 dark:bg-purple-700">
                     Save Store Data
                   </Button>
                 </div>

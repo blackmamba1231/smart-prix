@@ -1,29 +1,29 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { format } from "date-fns"
-import { CalendarIcon } from 'lucide-react'
-import { DateRange } from "react-day-picker"
+import * as React from "react";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { DateRange } from "react-day-picker";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 interface DatePickerWithRangeProps {
-  className?: string
+  className?: string;
   date: {
     from: Date;
     to: Date;
-  }
+  };
   setDate: (date: {
     from: Date;
     to: Date;
-  }) => void
+  }) => void;
 }
 
 export function DatePickerWithRange({
@@ -46,7 +46,8 @@ export function DatePickerWithRange({
             variant={"outline"}
             className={cn(
               "w-[300px] justify-start text-left font-normal",
-              !date && "text-muted-foreground"
+              !date && "text-muted-foreground",
+              "dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200" // Added for dark mode
             )}
           >
             <CalendarIcon className="mr-2 h-4 w-4" />
@@ -64,7 +65,10 @@ export function DatePickerWithRange({
             )}
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-auto p-0 bg-white" align="start">
+        <PopoverContent
+          className="w-auto p-0 bg-white dark:bg-gray-800 dark:border-gray-600 dark:text-gray-200" // Added for dark mode
+          align="start"
+        >
           <Calendar
             initialFocus
             mode="range"
@@ -73,7 +77,7 @@ export function DatePickerWithRange({
             onSelect={handleDateSelect}
             numberOfMonths={2}
             classNames={{
-              weekday: "text-center font-medium text-sm text-gray-500",
+              weekday: "text-center font-medium text-sm text-gray-500 dark:text-gray-400", // Added for dark mode
               weekdays: "grid grid-cols-7 gap-0.5 mb-2",
             }}
           />
@@ -82,4 +86,3 @@ export function DatePickerWithRange({
     </div>
   );
 }
-

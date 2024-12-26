@@ -1,12 +1,9 @@
 "use client";
 import * as XLSX from "xlsx";
 import { useState, useEffect } from "react";
-import {
-  MessageSquareIcon,
-  BellIcon,
-} from "lucide-react";
-
-import 'react-toastify/dist/ReactToastify.css';
+import { MessageSquareIcon, BellIcon } from "lucide-react";
+import { ModeToggle } from "@/components/ui/mode-toggle";
+import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -29,7 +26,12 @@ import {
 } from "recharts";
 import { DatePickerWithRange } from "@/components/ui/date-picker";
 import { subDays } from "date-fns";
-import { fetchUserAnalytics, fetchEarnings, fetchReferrals, updateUserEarnings } from "@/lib/api";
+import {
+  fetchUserAnalytics,
+  fetchEarnings,
+  fetchReferrals,
+  updateUserEarnings,
+} from "@/lib/api";
 import { jsPDF } from "jspdf";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -56,48 +58,50 @@ export default function DashboardPage() {
   const [date, setDate] = useState<{
     from: Date;
     to: Date;
-  }  >({
+  }>({
     from: subDays(new Date(), 7),
-    to: new Date()
+    to: new Date(),
   });
 
   const [userAnalytics, setUserAnalytics] = useState<UserAnalyticsData[]>([]);
   const [earnings, setEarnings] = useState<EarningsData[]>([]);
   const [referrals, setReferrals] = useState<ReferralData[]>([]);
-  useEffect(()=>{
-    async function updateEarnings(){
-     try {
+  useEffect(() => {
+    async function updateEarnings() {
+      try {
         await updateUserEarnings();
-     } catch (error) {
-      toast.error('Failed to update earnings');
-       console.log("unable to update earnings data:" + error);
-     }
+      } catch (error) {
+        toast.error("Failed to update earnings");
+        console.log("unable to update earnings data:" + error);
+      }
     }
     updateEarnings();
-  },[])
+  }, []);
 
   useEffect(() => {
     async function loadData() {
       try {
-
-        const userAnalyticsData = await  fetchUserAnalytics(date.from.toISOString().split('T')[0], date.to.toISOString().split('T')[0]);
-        console.log("frontend:"+userAnalyticsData);
+        const userAnalyticsData = await fetchUserAnalytics(
+          date.from.toISOString().split("T")[0],
+          date.to.toISOString().split("T")[0]
+        );
+        console.log("frontend:" + userAnalyticsData);
         const formattedUserAnalytics = userAnalyticsData.map((row) => ({
-          date: new Date(row.date).toLocaleDateString(),  // Format the date as a string
+          date: new Date(row.date).toLocaleDateString(), // Format the date as a string
           clicks: row.clicks || 0,
           views: row.views || 0,
           signups: row.signups || 0,
         }));
-        console.log("formatedd user data"+formattedUserAnalytics);
-        
+        console.log("formatedd user data" + formattedUserAnalytics);
+
         setUserAnalytics(formattedUserAnalytics);
         const earningsData = await fetchEarnings();
-        console.log("earningsdata"+ earningsData);
+        console.log("earningsdata" + earningsData);
         setEarnings(earningsData);
         const referalData = await fetchReferrals();
         setReferrals(referalData);
       } catch (error) {
-        toast.error('Failed to fetch data');
+        toast.error("Failed to fetch data");
         console.error("Failed to fetch data:", error);
       }
     }
@@ -106,7 +110,7 @@ export default function DashboardPage() {
 
   const exportData = (type: "pdf" | "excel") => {
     const data = JSON.stringify(userAnalytics, null, 2); // Your data
-  
+
     if (type === "pdf") {
       const doc = new jsPDF();
       doc.text(data, 10, 10); // Add the data to the PDF
@@ -121,16 +125,17 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-       <ToastContainer   position="bottom-right"
-  autoClose={5000}
-  hideProgressBar={false}
-  newestOnTop={false}
-  closeOnClick
-  rtl={false}
-  pauseOnFocusLoss
-  draggable
-  pauseOnHover
-/>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       {/* Header */}
       <header className="sticky top-0 z-10 bg-white dark:bg-gray-800 shadow-sm">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
@@ -138,16 +143,15 @@ export default function DashboardPage() {
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
               Dashboard
             </h1>
-            
           </div>
           <div className="flex items-center space-x-4">
+            <ModeToggle />
             <Button variant="ghost" size="icon">
               <MessageSquareIcon className="h-5 w-5" />
             </Button>
             <Button variant="ghost" size="icon">
               <BellIcon className="h-5 w-5" />
             </Button>
-           
           </div>
         </div>
       </header>
@@ -159,9 +163,8 @@ export default function DashboardPage() {
             Overview
           </h2>
           <div className="flex items-center gap-4">
-           
             <DatePickerWithRange
-              className="bg-white"
+              className="bg-white dark:bg-gray-800" // Added dark mode styling
               date={date}
               setDate={setDate}
             />

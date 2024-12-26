@@ -181,11 +181,11 @@ export default function Customer() {
                       <TableCell className="text-right">
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button  className="bg-gradient-to-r from-green-400 to-green-700">
+                            <Button variant={"outline"} className="bg-white dark:bg-gray-800">
                               <MoreHorizontal className="h-4 w-4" />
                             </Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-white">
+                          <DropdownMenuContent align="end" className="bg-white dark:bg-gray-800">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuItem className="hover:cursor-pointer" onClick={() => handleViewDetails(customer)}>View details</DropdownMenuItem>
                             <DropdownMenuItem className="hover:cursor-pointer" onClick={() => handleEditCustomer(customer)}>Edit</DropdownMenuItem>

@@ -143,7 +143,7 @@ export default function Promote() {
                           <DropdownMenuTrigger asChild>
                             <Button className="bg-gradient-to-r from-green-400 to-green-700">Actions</Button>
                           </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end" className="bg-white">
+                          <DropdownMenuContent align="end" className="bg-white dark:bg-gray-800">
                             <DropdownMenuItem className="hover:cursor-pointer" onClick={() => handleAction(item.id, "Approve")}>Approve</DropdownMenuItem>
                             <DropdownMenuItem className="hover:cursor-pointer" onClick={() => handleAction(item.id, "Reject")}>Reject</DropdownMenuItem>
                           </DropdownMenuContent>
